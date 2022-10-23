@@ -15,7 +15,7 @@ function Subtraction() {
   const correctAnswer = randomNumber - randomNumber2
   const [currentQuestion, setCurrentQuestion] = useState(1)
   const [score, setScore] = useState(0)
-  const answers = removeDuplicateNumbers([correctAnswer + 3, correctAnswer * 2, correctAnswer + 5, correctAnswer - 1], 4)
+  const answers = removeDuplicateNumbers([correctAnswer + 3, correctAnswer * 2 - 4, correctAnswer + 5, correctAnswer - 1], 4)
   answers[randomIndex] = correctAnswer
   const {setGlobalScore, setCompletedLevelName, setGlobalHighScore} = useAuth()
   const floatingScoreRef = useRef()
@@ -35,6 +35,7 @@ function Subtraction() {
     }, 1000)
   }
   function removeDuplicateNumbers(array, arrayLength){
+    console.log(array);
     let newArr = [...new Set(array)]
     if (arrayLength !== newArr.length) {
       newArr.push(65)
