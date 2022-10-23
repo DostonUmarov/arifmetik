@@ -17,7 +17,7 @@ function Multiplication() {
   const correctAnswer = randomNumber * randomNumber2
   const [currentQuestion, setCurrentQuestion] = useState(1)
   const [score, setScore] = useState(0)
-  const answers = [correctAnswer + 3, correctAnswer * 2, correctAnswer + 5, correctAnswer - 1]
+  const answers = removeDuplicateNumbers([correctAnswer + 3, correctAnswer * 2, correctAnswer + 5, correctAnswer - 1], 4)
   answers[randomIndex] = correctAnswer
   const {globalScore, setGlobalScore, setCompletedLevelName} = useAuth()
   const floatingScoreRef = useRef()
@@ -38,6 +38,13 @@ function Multiplication() {
     ref.current.classList.remove("visible")   
     }, 1000)
 }
+  function removeDuplicateNumbers(array, arrayLength){
+    let newArr = [...new Set(array)]
+    if (arrayLength !== newArr.length) {
+      newArr.push(65)
+      }
+          return newArr
+  }
 
 
 
