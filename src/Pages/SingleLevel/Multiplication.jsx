@@ -2,14 +2,13 @@ import x from "../../assets/x.svg"
 import AnswerCircle from "../../Components/AnswerCircle"
 import { useState } from "react"
 import CSS from "../SingleLevel/SingleLevel.css"
-import { useNavigate, useParams } from "react-router-dom"
+import { useNavigate } from "react-router-dom"
 import { useLayoutEffect } from "react"
 import { useAuth } from "../../Components/context"
 import { useRef } from "react"
 
 function Multiplication() {
   const [activeButton, setActiveButton] = useState()
-  const {operation} = useParams()
   const [sign, setSign] = useState()
   const [randomNumber, setRandomNumber] = useState(()=> Math.ceil(Math.random() * 6))
   const [randomNumber2, setRandomNumber2] = useState(()=> Math.ceil(Math.random() * 7))
@@ -19,7 +18,7 @@ function Multiplication() {
   const [score, setScore] = useState(0)
   const answers = removeDuplicateNumbers([correctAnswer + 3, correctAnswer * 2, correctAnswer + 5, correctAnswer - 1], 4)
   answers[randomIndex] = correctAnswer
-  const {globalScore, setGlobalScore, setCompletedLevelName, setGlobalHighScore} = useAuth()
+  const {setGlobalScore, setCompletedLevelName, setGlobalHighScore} = useAuth()
   const floatingScoreRef = useRef()
   const navigate = useNavigate()
 
@@ -60,24 +59,10 @@ function Multiplication() {
       }
     }
   }
-
-
-
-  const answerButtons = answers.map((answer, index)=>{
-    return <AnswerCircle 
-    answer={answer}
-    key={index}
-    index={index}
-    activeButton={activeButton}
-    setActiveButton={setActiveButton}
-    />
-  })
-
-  function leaveGameConfirmation(){
+ function leaveGameConfirmation(){
     const leaveGame = confirm("are you sure you want to leave the game?")
     leaveGame ? navigate ("/category") : ""
   }
-
   function handleButtonClick(){
     floatingScoreRef.current.classList.add("visible")
     setTimeout(() => {
@@ -109,6 +94,16 @@ function Multiplication() {
     } 
   }
 
+
+  const answerButtons = answers.map((answer, index)=>{
+    return <AnswerCircle 
+    answer={answer}
+    key={index}
+    index={index}
+    activeButton={activeButton}
+    setActiveButton={setActiveButton}
+    />
+  })
 
   return (
     <main className="gameplay-main">

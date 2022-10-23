@@ -2,13 +2,12 @@ import x from "../../assets/x.svg"
 import AnswerCircle from "../../Components/AnswerCircle"
 import { useRef, useState } from "react"
 import CSS from "../SingleLevel/SingleLevel.css"
-import { useNavigate, useParams } from "react-router-dom"
+import { useNavigate } from "react-router-dom"
 import { useLayoutEffect } from "react"
 import { useAuth } from "../../Components/context"
 
 function Subtraction() {
   const [activeButton, setActiveButton] = useState()
-  const {operation} = useParams()
   const [sign, setSign] = useState()
   const [randomNumber, setRandomNumber] = useState(()=> Math.ceil(Math.random() * 20 + 4))
   const [randomNumber2, setRandomNumber2] = useState(()=> Math.ceil(Math.random() * 10))
@@ -18,7 +17,7 @@ function Subtraction() {
   const [score, setScore] = useState(0)
   const answers = removeDuplicateNumbers([correctAnswer + 3, correctAnswer * 2, correctAnswer + 5, correctAnswer - 1], 4)
   answers[randomIndex] = correctAnswer
-  const {globalScore, setGlobalScore, setCompletedLevelName, setGlobalHighScore} = useAuth()
+  const {setGlobalScore, setCompletedLevelName, setGlobalHighScore} = useAuth()
   const floatingScoreRef = useRef()
   const navigate = useNavigate()
 
@@ -34,7 +33,7 @@ function Subtraction() {
     setTimeout(() => {
     ref.current.classList.remove("visible")   
     }, 1000)
-}
+  }
   function removeDuplicateNumbers(array, arrayLength){
     let newArr = [...new Set(array)]
     if (arrayLength !== newArr.length) {
@@ -42,39 +41,25 @@ function Subtraction() {
       }
           return newArr
   }
-
-
-
-  const answerButtons = answers.map((answer, index)=>{
-    return <AnswerCircle 
-    answer={answer}
-    key={index}
-    index={index}
-    activeButton={activeButton}
-    setActiveButton={setActiveButton}
-    />
-  })
-
   function leaveGameConfirmation(){
-    const leaveGame = confirm("are you sure you want to leave the game?")
-    leaveGame ? navigate ("/category") : ""
+      const leaveGame = confirm("are you sure you want to leave the game?")
+      leaveGame ? navigate ("/category") : ""
   }
   function highScoreSetter(currentScore, category){
-    let prevHs = localStorage.getItem(`math-game-hs-${category}`)
+      let prevHs = localStorage.getItem(`math-game-hs-${category}`)
 
-    if (prevHs == null) {
-      setGlobalHighScore(currentScore)
-      localStorage.setItem(`math-game-hs-${category}`, currentScore)
-    }else{
-      if (currentScore >= prevHs) {
-        localStorage.setItem(`math-game-hs-${category}`, currentScore)
+      if (prevHs == null) {
         setGlobalHighScore(currentScore)
-
+        localStorage.setItem(`math-game-hs-${category}`, currentScore)
       }else{
-      }
-    }
-  }
+        if (currentScore >= prevHs) {
+          localStorage.setItem(`math-game-hs-${category}`, currentScore)
+          setGlobalHighScore(currentScore)
 
+        }else{
+        }
+      }
+  }
   function handleButtonClick(){
     floatingScoreRef.current.classList.add("visible")
     setTimeout(() => {
@@ -105,7 +90,15 @@ function Subtraction() {
      setRandomIndex(Math.floor(Math.random() * 4)) 
     }  
   }
-
+  const answerButtons = answers.map((answer, index)=>{
+      return <AnswerCircle 
+      answer={answer}
+      key={index}
+      index={index}
+      activeButton={activeButton}
+      setActiveButton={setActiveButton}
+      />
+    })
 
   return (
     <main className="gameplay-main">

@@ -2,7 +2,7 @@ import x from "../../assets/x.svg"
 import AnswerCircle from "../../Components/AnswerCircle"
 import { useRef, useState } from "react"
 import CSS from "../SingleLevel/SingleLevel.css"
-import { useNavigate, useParams } from "react-router-dom"
+import { useNavigate } from "react-router-dom"
 import { useLayoutEffect } from "react"
 import { useAuth } from "../../Components/context"
 
@@ -17,7 +17,7 @@ function Division() {
   const [score, setScore] = useState(0)
   const answers = removeDuplicateNumbers([correctAnswer + 3, correctAnswer * 2, correctAnswer + 5, correctAnswer + 1], 4)
   answers[randomIndex] = correctAnswer
-  const {globalScore, setGlobalScore, setCompletedLevelName, setGlobalHighScore} = useAuth()
+  const {setGlobalScore, setCompletedLevelName, setGlobalHighScore} = useAuth()
   const navigate = useNavigate()
   const floatingScoreRef = useRef()
 
