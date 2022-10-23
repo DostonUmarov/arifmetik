@@ -18,7 +18,7 @@ function Subtraction() {
   const [score, setScore] = useState(0)
   const answers = removeDuplicateNumbers([correctAnswer + 3, correctAnswer * 2, correctAnswer + 5, correctAnswer - 1], 4)
   answers[randomIndex] = correctAnswer
-  const {globalScore, setGlobalScore, setCompletedLevelName} = useAuth()
+  const {globalScore, setGlobalScore, setCompletedLevelName, setGlobalHighScore} = useAuth()
   const floatingScoreRef = useRef()
   const navigate = useNavigate()
 
@@ -59,6 +59,21 @@ function Subtraction() {
     const leaveGame = confirm("are you sure you want to leave the game?")
     leaveGame ? navigate ("/category") : ""
   }
+  function highScoreSetter(currentScore, category){
+    let prevHs = localStorage.getItem(`math-game-hs-${category}`)
+
+    if (prevHs == null) {
+      setGlobalHighScore(currentScore)
+      localStorage.setItem(`math-game-hs-${category}`, currentScore)
+    }else{
+      if (currentScore >= prevHs) {
+        localStorage.setItem(`math-game-hs-${category}`, currentScore)
+        setGlobalHighScore(currentScore)
+
+      }else{
+      }
+    }
+  }
 
   function handleButtonClick(){
     floatingScoreRef.current.classList.add("visible")
@@ -68,8 +83,10 @@ function Subtraction() {
     if (currentQuestion == 5) {
       if (activeButton == correctAnswer){
         setGlobalScore(score + 20)
+        highScoreSetter(score + 20, "subtraction")
     }else{
-         setGlobalScore(score)
+        setGlobalScore(score)
+        highScoreSetter(score, "subtraction")
     }       
       navigate("/score") 
     }else{

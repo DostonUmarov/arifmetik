@@ -19,7 +19,7 @@ function Addition() {
   const [score, setScore] = useState(0)
   const answers = removeDuplicateNumbers([correctAnswer + 3, correctAnswer * 2, correctAnswer + 5, correctAnswer - 1], 4)
   answers[randomIndex] = correctAnswer
-  const {globalScore, setGlobalScore, setCompletedLevelName} = useAuth()
+  const {globalScore, setGlobalScore, setCompletedLevelName, setGlobalHighScore} = useAuth()
   const floatingScoreRef = useRef()
   const navigate = useNavigate()
 
@@ -52,9 +52,12 @@ function Addition() {
           if (currentQuestion == 5) {
           if (activeButton == correctAnswer){
               setGlobalScore(score + 20)
+              highScoreSetter(score + 20, "addition")
           }else{
               setGlobalScore(score)
+              highScoreSetter(score, "addition")
           }       
+            
             navigate("/score") 
         }else{
           if (activeButton == correctAnswer) {
@@ -74,6 +77,21 @@ function Addition() {
           
         
   }
+  function highScoreSetter(currentScore, category){
+    let prevHs = localStorage.getItem(`math-game-hs-${category}`)
+
+    if (prevHs == null) {
+      setGlobalHighScore(currentScore)
+      localStorage.setItem(`math-game-hs-${category}`, currentScore)
+    }else{
+      if (currentScore >= prevHs) {
+        localStorage.setItem(`math-game-hs-${category}`, currentScore)
+        setGlobalHighScore(currentScore)
+
+      }else{
+      }
+    }
+  }
 
   const answerButtons = answers.map((answer, index)=>{
     return <AnswerCircle 
@@ -84,11 +102,6 @@ function Addition() {
     setActiveButton={setActiveButton}
     />
   })
-
-  
-
-  
-
 
   return (
     <main className="gameplay-main">

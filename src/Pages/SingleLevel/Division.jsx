@@ -17,7 +17,7 @@ function Division() {
   const [score, setScore] = useState(0)
   const answers = removeDuplicateNumbers([correctAnswer + 3, correctAnswer * 2, correctAnswer + 5, correctAnswer + 1], 4)
   answers[randomIndex] = correctAnswer
-  const {globalScore, setGlobalScore, setCompletedLevelName} = useAuth()
+  const {globalScore, setGlobalScore, setCompletedLevelName, setGlobalHighScore} = useAuth()
   const navigate = useNavigate()
   const floatingScoreRef = useRef()
 
@@ -34,7 +34,7 @@ function Division() {
     setTimeout(() => {
     ref.current.classList.remove("visible")   
     }, 1000)
-}
+  }
   function removeDuplicateNumbers(array, arrayLength){
     let newArr = [...new Set(array)]
     if (arrayLength !== newArr.length) {
@@ -42,7 +42,64 @@ function Division() {
       }
           return newArr
   }
+  function leaveGameConfirmation(){
+      const leaveGame = confirm("are you sure you want to leave the game?")
+      leaveGame ? navigate ("/category") : ""
+  }
+  function makeRandomNumberEven(number){
+      if (number % 2 == 0) {
+          return number
+      }else{
+          return number + 1
+      }
+  }
+  function randomNumberWithinRange(min, max){
+      return Math.floor(Math.random() * (max - min) + min)
+  }
+  function highScoreSetter(currentScore, category){
+    let prevHs = localStorage.getItem(`math-game-hs-${category}`)
 
+    if (prevHs == null) {
+      setGlobalHighScore(currentScore)
+      localStorage.setItem(`math-game-hs-${category}`, currentScore)
+    }else{
+      if (currentScore >= prevHs) {
+        localStorage.setItem(`math-game-hs-${category}`, currentScore)
+        setGlobalHighScore(currentScore)
+
+      }else{
+      }
+    }
+  }
+  function handleButtonClick(){
+      floatingScoreRef.current.classList.add("visible")
+      setTimeout(() => {
+          floatingScoreRef.current.classList.remove("visible")   
+      }, 1000);
+      if (currentQuestion == 5) {
+        if (activeButton == correctAnswer){
+          setGlobalScore(score + 20)
+          highScoreSetter(score + 20, "division")
+      }else{
+          setGlobalScore(score)
+          highScoreSetter(score, "division")
+      }         
+            navigate("/score") 
+        }else{
+          if (activeButton == correctAnswer) {
+            setScore((prev)=> prev + 20)
+            showFloatingNumber(floatingScoreRef, "+20")
+        }
+        else if (activeButton !== correctAnswer) {
+        showFloatingNumber(floatingScoreRef, "+0")
+        }
+        setRandomNumber(makeRandomNumberEven(randomNumberWithinRange(6, 15)))
+        setRandomNumber2(makeRandomNumberEven(randomNumberWithinRange(2, 6)))
+        setActiveButton(null)
+        setCurrentQuestion((prev)=> prev + 1)    
+        setRandomIndex(Math.floor(Math.random() * 4)) 
+        }  
+  }
 
 
   const answerButtons = answers.map((answer, index)=>{
@@ -54,59 +111,6 @@ function Division() {
     setActiveButton={setActiveButton}
     />
   })
-
-  function leaveGameConfirmation(){
-    const leaveGame = confirm("are you sure you want to leave the game?")
-    leaveGame ? navigate ("/category") : ""
-  }
-
-  function makeRandomNumberEven(number){
-    if (number % 2 == 0) {
-        return number
-    }else{
-        return number + 1
-    }
-  }
-  function pickSmallerNumber(number, GeneratedNumber){
-    if (number > GeneratedNumber ){
-        return GeneratedNumber
-    }else{
-        return number
-    }
-  }
-  function randomNumberWithinRange(min, max){
-    return Math.floor(Math.random() * (max - min) + min)
-  }
-  function handleButtonClick(){
-    floatingScoreRef.current.classList.add("visible")
-    setTimeout(() => {
-        floatingScoreRef.current.classList.remove("visible")   
-    }, 1000);
-    if (currentQuestion == 5) {
-        if (activeButton == correctAnswer){
-            setGlobalScore(score + 20)
-        }else{
-             setGlobalScore(score)
-        }       
-          navigate("/score") 
-      }else{
-        if (activeButton == correctAnswer) {
-          setScore((prev)=> prev + 20)
-          showFloatingNumber(floatingScoreRef, "+20")
-       }
-       else if (activeButton !== correctAnswer) {
-       navigator.vibrate(250)
-       showFloatingNumber(floatingScoreRef, "+0")
-       }
-       setRandomNumber(makeRandomNumberEven(randomNumberWithinRange(6, 15)))
-       setRandomNumber2(pickSmallerNumber(makeRandomNumberEven(randomNumberWithinRange(2, 6))))
-       setActiveButton(null)
-       setCurrentQuestion((prev)=> prev + 1)    
-       setRandomIndex(Math.floor(Math.random() * 4)) 
-      }  
-  }
-
-
   return (
     <main className="gameplay-main">
       <div className="x-container">

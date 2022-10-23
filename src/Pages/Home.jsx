@@ -1,4 +1,5 @@
 import { useRef } from "react"
+import { useEffect } from "react"
 import { useState } from "react"
 import { useNavigate } from "react-router-dom"
 import { useAuth } from "../Components/context"
@@ -9,6 +10,12 @@ function Home() {
   const navigate = useNavigate()
   const validatorRef=useRef()
   const inputRef = useRef()
+
+  useEffect(()=>{
+    if(localStorage.getItem("math-game-react")){
+      setInputValue(localStorage.getItem("math-game-react"))
+    }
+  }, [])
 
   function handleSubmit(e){
     e.preventDefault()

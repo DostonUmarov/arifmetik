@@ -4,7 +4,7 @@ import { useAuth } from "../../Components/context"
 
 function ScoreScreen() {
     const navigate = useNavigate()
-    const {name, globalScore, completedLevelName} = useAuth()
+    const {name, globalScore, completedLevelName, globalHighScore} = useAuth()
 
     function backToCategoriesPage(){
         navigate("/category")
@@ -28,7 +28,7 @@ function ScoreScreen() {
 
             <div className="high-score">
                 <p>Highscore</p>
-                <p>0</p>
+                <p>{globalHighScore}</p>
             </div>
         </div>
 

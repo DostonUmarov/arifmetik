@@ -19,7 +19,7 @@ function Multiplication() {
   const [score, setScore] = useState(0)
   const answers = removeDuplicateNumbers([correctAnswer + 3, correctAnswer * 2, correctAnswer + 5, correctAnswer - 1], 4)
   answers[randomIndex] = correctAnswer
-  const {globalScore, setGlobalScore, setCompletedLevelName} = useAuth()
+  const {globalScore, setGlobalScore, setCompletedLevelName, setGlobalHighScore} = useAuth()
   const floatingScoreRef = useRef()
   const navigate = useNavigate()
 
@@ -44,6 +44,21 @@ function Multiplication() {
       newArr.push(65)
       }
           return newArr
+  }
+  function highScoreSetter(currentScore, category){
+    let prevHs = localStorage.getItem(`math-game-hs-${category}`)
+
+    if (prevHs == null) {
+      setGlobalHighScore(currentScore)
+      localStorage.setItem(`math-game-hs-${category}`, currentScore)
+    }else{
+      if (currentScore >= prevHs) {
+        localStorage.setItem(`math-game-hs-${category}`, currentScore)
+        setGlobalHighScore(currentScore)
+
+      }else{
+      }
+    }
   }
 
 
@@ -71,9 +86,11 @@ function Multiplication() {
     if (currentQuestion == 5) {
       if (activeButton == correctAnswer){
         setGlobalScore(score + 20)
+        highScoreSetter(score + 20, "multiplication")
     }else{
-         setGlobalScore(score)
-    }       
+        setGlobalScore(score)
+        highScoreSetter(score, "multiplication")
+    }         
       navigate("/score") 
     }else{
       if (activeButton == correctAnswer) {
