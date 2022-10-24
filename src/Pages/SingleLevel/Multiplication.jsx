@@ -64,34 +64,36 @@ function Multiplication() {
     leaveGame ? navigate ("/category") : ""
   }
   function handleButtonClick(){
-    floatingScoreRef.current.classList.add("visible")
-    setTimeout(() => {
-        floatingScoreRef.current.classList.remove("visible")   
-    }, 1000);
     if (currentQuestion == 5) {
       if (activeButton == correctAnswer){
         setGlobalScore(score + 20)
         highScoreSetter(score + 20, "multiplication")
+        navigate("/score")
     }else{
         setGlobalScore(score)
         highScoreSetter(score, "multiplication")
+        floatingScoreRef.current.classList.add("visible")
     }         
-      navigate("/score") 
     }else{
       if (activeButton == correctAnswer) {
         setScore((prev)=> prev + 20)
-        showFloatingNumber(floatingScoreRef, "+20")
+        nextGame()
      }
      else if (activeButton !== correctAnswer) {
      navigator.vibrate(250)
-     showFloatingNumber(floatingScoreRef, "+0")
+     floatingScoreRef.current.classList.add("visible")
      }
-     setRandomNumber( Math.ceil(Math.random() * 6))
-     setRandomNumber2( Math.ceil(Math.random() * 7))
-     setActiveButton(null)
-     setCurrentQuestion((prev)=> prev + 1)    
-     setRandomIndex(Math.floor(Math.random() * 4)) 
     } 
+  }
+  function nextGame(){
+    if (currentQuestion == 5) {
+      return navigate("/score")
+    }
+    setRandomNumber( Math.ceil(Math.random() * 6))
+        setRandomNumber2( Math.ceil(Math.random() * 7))
+        setActiveButton(null)
+        setCurrentQuestion((prev)=> prev + 1)    
+        setRandomIndex(Math.floor(Math.random() * 4)) 
   }
 
 
@@ -133,9 +135,21 @@ function Multiplication() {
         className={activeButton != null | activeButton != undefined? "" : "disabled"}
         >Next Question</button>
 
-        <p 
-        ref={floatingScoreRef}
-        className="score-showcase">+20</p>
+    <div 
+        ref={floatingScoreRef}        
+        className="overlay">
+          <div
+        className="score-showcase">
+          <p>Oops, that's not the right answer, {`${randomNumber} ${sign} ${randomNumber2}`} is actually<span> {correctAnswer}</span></p>
+
+          <button
+          onClick={()=>{
+            floatingScoreRef.current.classList.remove("visible")
+            nextGame()
+          }}
+          >Continue</button>
+        </div>
+          </div>
     </main>
   )
 }

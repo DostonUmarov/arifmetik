@@ -29,13 +29,7 @@ function Addition() {
     setCompletedLevelName("addition")
   }, [])
 
-  function showFloatingNumber(ref, numberToDisplay){
-      ref.current.textContent = numberToDisplay
-      ref.current.classList.add("visible")
-      setTimeout(() => {
-      ref.current.classList.remove("visible")   
-      }, 1000)
-  }
+  
   function removeDuplicateNumbers(array, arrayLength){
     let newArr = [...new Set(array)]
     if (arrayLength !== newArr.length) {
@@ -46,32 +40,28 @@ function Addition() {
   function leaveGameConfirmation(){
       const leaveGame = confirm("are you sure you want to leave the game?")
       leaveGame ? navigate ("/category") : ""
-  }
+  } 
   function handleButtonClick(){
           if (currentQuestion == 5) {
           if (activeButton == correctAnswer){
               setGlobalScore(score + 20)
               highScoreSetter(score + 20, "addition")
+              navigate("/score")
           }else{
               setGlobalScore(score)
               highScoreSetter(score, "addition")
+              floatingScoreRef.current.classList.add("visible")
           }       
-            
-            navigate("/score") 
         }else{
           if (activeButton == correctAnswer) {
-            setScore((prev)=> prev + 20)
-            showFloatingNumber(floatingScoreRef, "+20")
+        setScore((prev)=> prev + 20)
+        nextGame()
         }
         else if (activeButton !== correctAnswer) {
         navigator.vibrate(250)
-        showFloatingNumber(floatingScoreRef, "+0")
+        floatingScoreRef.current.classList.add("visible")
         }
-        setRandomNumber( Math.ceil(Math.random() * 20))
-        setRandomNumber2( Math.ceil(Math.random() * 10))
-        setActiveButton(null)
-        setCurrentQuestion((prev)=> prev + 1)    
-        setRandomIndex(Math.floor(Math.random() * 4)) 
+        
         }    
           
         
@@ -91,7 +81,16 @@ function Addition() {
       }
     }
   }
-
+  function nextGame(){
+    if (currentQuestion == 5) {
+      return navigate("/score")
+    }
+    setRandomNumber( Math.ceil(Math.random() * 20))
+        setRandomNumber2( Math.ceil(Math.random() * 10))
+        setActiveButton(null)
+        setCurrentQuestion((prev)=> prev + 1)    
+        setRandomIndex(Math.floor(Math.random() * 4)) 
+  } 
   const answerButtons = answers.map((answer, index)=>{
     return <AnswerCircle 
     answer={answer}
@@ -129,9 +128,22 @@ function Addition() {
         onClick={()=>handleButtonClick()}
         className={activeButton != null | activeButton != undefined? "" : "disabled"}>Next Question</button>
 
-        <p 
-        ref={floatingScoreRef}
-        className="score-showcase">+20</p>
+        <div 
+        ref={floatingScoreRef}        
+        className="overlay">
+          <div
+        className="score-showcase">
+          <p>Oops, that's not the right answer, {`${randomNumber} ${sign} ${randomNumber2}`} is actually<span> {correctAnswer}</span></p>
+
+          <button
+          onClick={()=>{
+            floatingScoreRef.current.classList.remove("visible")
+            nextGame()
+          }}
+          >Continue</button>
+        </div>
+          </div>
+        
     </main>
   )
 }

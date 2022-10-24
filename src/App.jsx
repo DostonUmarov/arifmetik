@@ -3,7 +3,6 @@ import MyContextProvider from "./Components/context"
 
 import Category from "./Pages/Category/Category"
 import Home from "./Pages/Home"
-import SingleLevel from "./Pages/SingleLevel/SingleLevel"
 import ScoreScreen from "./Pages/Score/ScoreScreen"
 
 import { useState } from "react"

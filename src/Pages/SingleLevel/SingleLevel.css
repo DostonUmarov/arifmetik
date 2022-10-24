@@ -89,22 +89,52 @@ main.gameplay-main{
     pointer-events: none;
 }
 
-p.score-showcase{
-    display:none;
-    color:white;
-    position: absolute;
-    bottom:0;
-    font-weight: bold;
-    font-size: 10rem;
-    font-family: poppins-semiBold;
-    opacity: .3;
-    animation: score-float ease-in-out 1s forwards ;
-    -webkit-animation: score-float ease-in-out 1s forwards ;
-    pointer-events: none;
+.gameplay-main .overlay{
+    position: fixed;
+    top:0;
+    left:0;
+    background-color: rgba(0, 0, 0, 0.39);
+    width:100%;
+    height:100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity:0;
+    visibility: hidden;
 }
 
-p.score-showcase.visible{
-    display: initial;
+div.score-showcase{
+    background-color: var(--wrong-answer-popup);
+    width:90%;
+    max-width: 40rem;
+    border-radius: 1rem;
+    padding:2rem;
+    -webkit-border-radius: 1rem;
+    -moz-border-radius: 1rem;
+    -ms-border-radius: 1rem;
+    -o-border-radius: 1rem;
+    box-shadow: 0 0 1rem rgba(0, 0, 0, 0.226);
+}
+
+.score-showcase span{
+    font-size: 2rem;
+    font-family: poppins-semiBold;
+}
+
+.score-showcase p{
+    color:white;
+    font-size: 1.5rem;
+    font-family: poppins;
+    text-align: center;
+}
+
+.score-showcase button{
+    margin:4rem auto 0 auto; 
+}
+
+.gameplay-main .overlay.visible{   
+    visibility: visible; 
+    opacity:1;
 }
 
 @media screen and (min-width:600px) {

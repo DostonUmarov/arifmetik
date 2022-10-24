@@ -9,13 +9,13 @@ import { useAuth } from "../../Components/context"
 function Subtraction() {
   const [activeButton, setActiveButton] = useState()
   const [sign, setSign] = useState()
-  const [randomNumber, setRandomNumber] = useState(()=> Math.ceil(Math.random() * 20 + 4))
+  const [randomNumber, setRandomNumber] = useState(()=> Math.ceil(Math.random() * 24))
   const [randomNumber2, setRandomNumber2] = useState(()=> Math.ceil(Math.random() * 10))
   const [randomIndex, setRandomIndex] = useState(()=> Math.floor(Math.random() * 4))
   const correctAnswer = randomNumber - randomNumber2
   const [currentQuestion, setCurrentQuestion] = useState(1)
   const [score, setScore] = useState(0)
-  const answers = removeDuplicateNumbers([correctAnswer + 3, correctAnswer * 2 - 4, correctAnswer + 5, correctAnswer - 1], 4)
+  const answers = removeDuplicateNumbers([correctAnswer + 3, correctAnswer * 2 - correctAnswer + 1, correctAnswer + 5, correctAnswer - 1], 4)
   answers[randomIndex] = correctAnswer
   const {setGlobalScore, setCompletedLevelName, setGlobalHighScore} = useAuth()
   const floatingScoreRef = useRef()
@@ -27,13 +27,6 @@ function Subtraction() {
     setSign("-")
     setCompletedLevelName("subtraction")
   }, [])
-  function showFloatingNumber(ref, numberToDisplay){
-    ref.current.textContent = numberToDisplay
-    ref.current.classList.add("visible")
-    setTimeout(() => {
-    ref.current.classList.remove("visible")   
-    }, 1000)
-  }
   function removeDuplicateNumbers(array, arrayLength){
     console.log(array);
     let newArr = [...new Set(array)]
@@ -61,36 +54,39 @@ function Subtraction() {
         }
       }
   }
+  function nextGame(){
+    if (currentQuestion == 5) {
+      return navigate("/score")
+    }
+    setRandomNumber(Math.ceil(Math.random() * 24))
+        setRandomNumber2( Math.ceil(Math.random() * 10))
+        setActiveButton(null)
+        setCurrentQuestion((prev)=> prev + 1)    
+        setRandomIndex(Math.floor(Math.random() * 4)) 
+  }
   function handleButtonClick(){
-    floatingScoreRef.current.classList.add("visible")
-    setTimeout(() => {
-        floatingScoreRef.current.classList.remove("visible")   
-    }, 1000);
     if (currentQuestion == 5) {
       if (activeButton == correctAnswer){
         setGlobalScore(score + 20)
         highScoreSetter(score + 20, "subtraction")
+        navigate("/score")
     }else{
         setGlobalScore(score)
         highScoreSetter(score, "subtraction")
-    }       
-      navigate("/score") 
+        floatingScoreRef.current.classList.add("visible")
+    }
     }else{
       if (activeButton == correctAnswer) {
         setScore((prev)=> prev + 20)
-        showFloatingNumber(floatingScoreRef, "+20")
+        nextGame()
      }
      else if (activeButton !== correctAnswer) {
-     navigator.vibrate(250)
-     showFloatingNumber(floatingScoreRef, "+0")
+      navigator.vibrate(250)
+      floatingScoreRef.current.classList.add("visible")
      }
-     setRandomNumber( Math.ceil(Math.random() * 20 + 4))
-     setRandomNumber2( Math.ceil(Math.random() * 10))
-     setActiveButton(null)
-     setCurrentQuestion((prev)=> prev + 1)    
-     setRandomIndex(Math.floor(Math.random() * 4)) 
     }  
   }
+
   const answerButtons = answers.map((answer, index)=>{
       return <AnswerCircle 
       answer={answer}
@@ -129,9 +125,21 @@ function Subtraction() {
         className={activeButton != null | activeButton != undefined? "" : "disabled"}
         >Next Question</button>
 
-        <p 
-        ref={floatingScoreRef}
-        className="score-showcase">+20</p>
+      <div 
+        ref={floatingScoreRef}        
+        className="overlay">
+          <div
+        className="score-showcase">
+          <p>Oops, that's not the right answer, {`${randomNumber} ${sign} ${randomNumber2}`} is actually<span> {correctAnswer}</span></p>
+
+          <button
+          onClick={()=>{
+            floatingScoreRef.current.classList.remove("visible")
+            nextGame()
+          }}
+          >Continue</button>
+        </div>
+          </div>
     </main>
   )
 }

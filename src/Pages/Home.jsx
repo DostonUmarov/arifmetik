@@ -35,7 +35,7 @@ function Home() {
   }
   
   return (
-    <div className="overlay">
+    <div className="home-overlay">
     <div className="popup">
       
     <form

@@ -34,6 +34,7 @@ html{
     --answers-border:hsl(16, 95%, 62%);
     --answer-fill:hsl(16, 100%, 53%);
     --answers-shadow: #a82d0080;
+    --wrong-answer-popup:hsl(16, 100%, 53%);
     
 
     --cta-button: #FFE5DB;
@@ -48,6 +49,7 @@ body.red{
     --answers-border:hsl(16, 95%, 62%);
     --answer-fill:hsl(16, 100%, 53%);
     --answers-shadow: #a82d0080;
+    --wrong-answer-popup:hsl(16, 100%, 53%);
 }
 
 body.blue{
@@ -57,6 +59,7 @@ body.blue{
     --answers-border:hsl(196, 95%, 52%);
     --answer-fill:hsl(196, 100%, 43%);
     --answers-shadow: hsla(196, 100%, 33%, 0.502);
+    --wrong-answer-popup:hsl(196, 100%, 43%);
     
 
     --cta-button: hsl(197, 100%, 93%);
@@ -70,6 +73,7 @@ body.green{
     --answers-border:hsl(115, 95%, 52%);
     --answer-fill:hsl(115, 100%, 33%);
     --answers-shadow: hsla(115, 100%, 33%, 0.502);
+    --wrong-answer-popup:hsl(115, 80%, 43%);
     
 
     --cta-button: hsl(116, 100%, 93%);
@@ -83,6 +87,7 @@ body.purple{
     --answers-border:hsl(316, 100%, 52%);
     --answer-fill:hsl(316, 100%, 43%);
     --answers-shadow: hsla(316, 100%, 33%, 0.502);
+    --wrong-answer-popup:hsl(316, 90%, 63%);
     
 
     --cta-button: hsl(317, 100%, 93%);
@@ -110,7 +115,7 @@ body.purple{
 }
 
 /* styling for the welcome page*/
-.overlay{
+.home-overlay{
     background-color: var(--bg-main);
     height:100vh;
     display: flex;
@@ -118,7 +123,7 @@ body.purple{
     justify-content: center;
 }
 
-.overlay .popup{
+.home-overlay .popup{
     width: 90vw;
     max-width: 45rem;
     background-color: var(--popup-bg);

@@ -9,7 +9,7 @@ import { useAuth } from "../../Components/context"
 function Division() {
   const [activeButton, setActiveButton] = useState()
   const [sign, setSign] = useState()
-  const [randomNumber, setRandomNumber] = useState(makeRandomNumberEven(randomNumberWithinRange(6, 15)))
+  const [randomNumber, setRandomNumber] = useState(makeRandomNumberEven(randomNumberWithinRange(6, 30)))
   const [randomNumber2, setRandomNumber2] = useState(makeRandomNumberEven(randomNumberWithinRange(2, 6)))
   const [randomIndex, setRandomIndex] = useState(()=> Math.floor(Math.random() * 4))
   const correctAnswer = (randomNumber / randomNumber2).toFixed(1)
@@ -27,14 +27,6 @@ function Division() {
     setSign("/")
     setCompletedLevelName("division")
   }, [])
-
-  function showFloatingNumber(ref, numberToDisplay){
-    ref.current.textContent = numberToDisplay
-    ref.current.classList.add("visible")
-    setTimeout(() => {
-    ref.current.classList.remove("visible")   
-    }, 1000)
-  }
   function removeDuplicateNumbers(array, arrayLength){
     let newArr = [...new Set(array)]
     if (arrayLength !== newArr.length) {
@@ -71,33 +63,36 @@ function Division() {
       }
     }
   }
-  function handleButtonClick(){
-      floatingScoreRef.current.classList.add("visible")
-      setTimeout(() => {
-          floatingScoreRef.current.classList.remove("visible")   
-      }, 1000);
-      if (currentQuestion == 5) {
-        if (activeButton == correctAnswer){
-          setGlobalScore(score + 20)
-          highScoreSetter(score + 20, "division")
-      }else{
-          setGlobalScore(score)
-          highScoreSetter(score, "division")
-      }         
-            navigate("/score") 
-        }else{
-          if (activeButton == correctAnswer) {
-            setScore((prev)=> prev + 20)
-            showFloatingNumber(floatingScoreRef, "+20")
-        }
-        else if (activeButton !== correctAnswer) {
-        showFloatingNumber(floatingScoreRef, "+0")
-        }
-        setRandomNumber(makeRandomNumberEven(randomNumberWithinRange(6, 15)))
+  function nextGame(){
+    if (currentQuestion == 5) {
+      return navigate("/score")
+    }
+    setRandomNumber(makeRandomNumberEven(randomNumberWithinRange(6, 30)))
         setRandomNumber2(makeRandomNumberEven(randomNumberWithinRange(2, 6)))
         setActiveButton(null)
         setCurrentQuestion((prev)=> prev + 1)    
         setRandomIndex(Math.floor(Math.random() * 4)) 
+  }
+  function handleButtonClick(){
+      if (currentQuestion == 5) {
+        if (activeButton == correctAnswer){
+          setGlobalScore(score + 20)
+          highScoreSetter(score + 20, "division")
+          navigate("/score")
+      }else{
+          setGlobalScore(score)
+          highScoreSetter(score, "division")
+          floatingScoreRef.current.classList.add("visible")
+      }         
+      }else{
+          if (activeButton == correctAnswer) {
+          setScore((prev)=> prev + 20)
+          nextGame()
+        }
+        else if (activeButton !== correctAnswer) {
+          navigator.vibrate(250)
+          floatingScoreRef.current.classList.add("visible")
+        }
         }  
   }
 
@@ -139,9 +134,21 @@ function Division() {
         className={activeButton != null | activeButton != undefined? "" : "disabled"}
         >Next Question</button>
 
-        <p 
-        ref={floatingScoreRef}
-        className="score-showcase">+20</p>
+      <div 
+        ref={floatingScoreRef}        
+        className="overlay">
+          <div
+        className="score-showcase">
+          <p>Oops, that's not the right answer, {`${randomNumber} ${sign} ${randomNumber2}`} is actually<span> {correctAnswer}</span></p>
+
+          <button
+          onClick={()=>{
+            floatingScoreRef.current.classList.remove("visible")
+            nextGame()
+          }}
+          >Continue</button>
+        </div>
+          </div>
     </main>
   )
 }
