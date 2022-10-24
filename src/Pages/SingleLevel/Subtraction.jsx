@@ -116,7 +116,7 @@ function Subtraction() {
       activeButton={activeButton}
       setActiveButton={setActiveButton}
       />
-    })
+  })
 
   return (
     <main className="gameplay-main">
