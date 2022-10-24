@@ -25,7 +25,7 @@ function Category() {
   return (
     <main className='categories-main'>
         <div className="top">
-            <p>Hello {name} 👋🏾<br />
+            <p>Hello {name} 👋<br />
              Please select a category you would like to play</p>
         </div>
         

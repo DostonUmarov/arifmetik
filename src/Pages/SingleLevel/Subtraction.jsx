@@ -53,7 +53,7 @@ function Subtraction() {
     
   }
   function leaveGameConfirmation(){
-      const leaveGame = confirm("are you sure you want to leave the game?")
+      const leaveGame = confirm("Are you sure you want to leave the game?")
       leaveGame ? navigate ("/category") : ""
   }
   function highScoreSetter(currentScore, category){
