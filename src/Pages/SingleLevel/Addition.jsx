@@ -6,6 +6,8 @@ import { useNavigate } from "react-router-dom"
 import { useLayoutEffect } from "react"
 import { useAuth } from "../../Components/context"
 import { useRef } from "react"
+import ding from "../../assets/game ding.mp3"
+import wrong from "../../assets/fail.mp3"
 
 function Addition() {
   const [activeButton, setActiveButton] = useState()
@@ -20,6 +22,8 @@ function Addition() {
   answers[randomIndex] = correctAnswer
   const {setGlobalScore, setCompletedLevelName, setGlobalHighScore} = useAuth()
   const floatingScoreRef = useRef()
+  const audioCorrectRef = useRef()
+  const audioWrongRef = useRef()
   const navigate = useNavigate()
 
   useLayoutEffect(()=>{
@@ -37,6 +41,19 @@ function Addition() {
       }
           return newArr
   }
+  function playSoundEffect(soundEffectRef){
+    soundEffectRef.current.currentTime = 0
+
+    if (soundEffectRef == audioWrongRef) {
+      soundEffectRef.current.play()
+        setTimeout(() => {
+          soundEffectRef.current.pause()
+        }, 2000)
+    }else{
+      soundEffectRef.current.play()
+    }
+    
+  }
   function leaveGameConfirmation(){
       const leaveGame = confirm("are you sure you want to leave the game?")
       leaveGame ? navigate ("/category") : ""
@@ -44,21 +61,24 @@ function Addition() {
   function handleButtonClick(){
           if (currentQuestion == 5) {
           if (activeButton == correctAnswer){
+            playSoundEffect(audioCorrectRef)
               setGlobalScore(score + 20)
               highScoreSetter(score + 20, "addition")
               navigate("/score")
           }else{
+            playSoundEffect(audioWrongRef)
               setGlobalScore(score)
               highScoreSetter(score, "addition")
               floatingScoreRef.current.classList.add("visible")
           }       
         }else{
           if (activeButton == correctAnswer) {
+        playSoundEffect(audioCorrectRef)     
         setScore((prev)=> prev + 20)
         nextGame()
         }
         else if (activeButton !== correctAnswer) {
-        navigator.vibrate(250)
+        playSoundEffect(audioWrongRef)
         floatingScoreRef.current.classList.add("visible")
         }
         
@@ -78,6 +98,7 @@ function Addition() {
         setGlobalHighScore(currentScore)
 
       }else{
+        setGlobalHighScore(prevHs)
       }
     }
   }
@@ -85,6 +106,7 @@ function Addition() {
     if (currentQuestion == 5) {
       return navigate("/score")
     }
+
     setRandomNumber( Math.ceil(Math.random() * 20))
         setRandomNumber2( Math.ceil(Math.random() * 10))
         setActiveButton(null)
@@ -103,6 +125,16 @@ function Addition() {
 
   return (
     <main className="gameplay-main">
+
+      <audio 
+      ref={audioCorrectRef}
+      src={ding}>        
+      </audio>
+
+      <audio 
+      ref={audioWrongRef}
+      src={wrong}></audio>
+
       <div className="x-container">
         <img 
         src={x} 

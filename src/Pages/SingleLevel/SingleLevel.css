@@ -101,6 +101,11 @@ main.gameplay-main{
     justify-content: center;
     opacity:0;
     visibility: hidden;
+    transition: .01s ease-in-out;
+    -webkit-transition: .01s ease-in-out;
+    -moz-transition: .01s ease-in-out;
+    -ms-transition: .01s ease-in-out;
+    -o-transition: .01s ease-in-out;
 }
 
 div.score-showcase{

@@ -6,6 +6,8 @@ import { useNavigate } from "react-router-dom"
 import { useLayoutEffect } from "react"
 import { useAuth } from "../../Components/context"
 import { useRef } from "react"
+import ding from "../../assets/game ding.mp3"
+import wrong from "../../assets/fail.mp3"
 
 function Multiplication() {
   const [activeButton, setActiveButton] = useState()
@@ -20,6 +22,8 @@ function Multiplication() {
   answers[randomIndex] = correctAnswer
   const {setGlobalScore, setCompletedLevelName, setGlobalHighScore} = useAuth()
   const floatingScoreRef = useRef()
+  const audioCorrectRef = useRef()
+  const audioWrongRef = useRef()
   const navigate = useNavigate()
 
 
@@ -56,8 +60,22 @@ function Multiplication() {
         setGlobalHighScore(currentScore)
 
       }else{
+        setGlobalHighScore(prevHs)
       }
     }
+  }
+  function playSoundEffect(soundEffectRef){
+    soundEffectRef.current.currentTime = 0
+
+    if (soundEffectRef == audioWrongRef) {
+      soundEffectRef.current.play()
+        setTimeout(() => {
+          soundEffectRef.current.pause()
+        }, 2000)
+    }else{
+      soundEffectRef.current.play()
+    }
+    
   }
  function leaveGameConfirmation(){
     const leaveGame = confirm("are you sure you want to leave the game?")
@@ -66,22 +84,25 @@ function Multiplication() {
   function handleButtonClick(){
     if (currentQuestion == 5) {
       if (activeButton == correctAnswer){
+        playSoundEffect(audioCorrectRef)
         setGlobalScore(score + 20)
         highScoreSetter(score + 20, "multiplication")
         navigate("/score")
     }else{
+      playSoundEffect(audioWrongRef)
         setGlobalScore(score)
         highScoreSetter(score, "multiplication")
         floatingScoreRef.current.classList.add("visible")
     }         
     }else{
       if (activeButton == correctAnswer) {
+        playSoundEffect(audioCorrectRef)   
         setScore((prev)=> prev + 20)
         nextGame()
      }
      else if (activeButton !== correctAnswer) {
-     navigator.vibrate(250)
-     floatingScoreRef.current.classList.add("visible")
+      playSoundEffect(audioWrongRef)
+      floatingScoreRef.current.classList.add("visible")
      }
     } 
   }
@@ -109,6 +130,15 @@ function Multiplication() {
 
   return (
     <main className="gameplay-main">
+      <audio 
+      ref={audioCorrectRef}
+      src={ding}>        
+      </audio>
+
+      <audio 
+      ref={audioWrongRef}
+      src={wrong}></audio>
+
       <div className="x-container">
         <img 
         src={x} 
