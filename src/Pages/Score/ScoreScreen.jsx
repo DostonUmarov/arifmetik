@@ -1,6 +1,7 @@
 import { useNavigate } from "react-router-dom"
 import CSS from "../Score/ScoreScreen.css"
 import { useAuth } from "../../Components/context"
+import { useLayoutEffect } from "react"
 
 function ScoreScreen() {
     const navigate = useNavigate()
@@ -13,6 +14,19 @@ function ScoreScreen() {
     function playAgain(){
         window.history.back()
     }
+
+    useLayoutEffect(()=>{
+        document.body.classList = []
+        if (completedLevelName == "addition") {
+            document.body.classList.add('red')
+        }else if(completedLevelName == "subtraction"){
+            document.body.classList.add("blue")
+        }else if(completedLevelName == "division"){
+            document.body.classList.add("green")
+        }else if(completedLevelName == "multiplication"){
+            document.body.classList.add("purple")
+        }
+    }, [])
 
   return (
     <main className="score-main">
