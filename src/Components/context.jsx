@@ -15,12 +15,6 @@ const MyContextProvider = ({children}) => {
         setName(playersName)
     }
 
-    // useEffect(()=>{
-    //     if (globalScore > globalHighScore) {
-    //         setGlobalHighScore(globalScore)
-    //     }
-    // })
-
     return(
         <ContextContainer.Provider value={{name, setNameFunction, globalScore, setGlobalScore, globalHighScore, setGlobalHighScore, completedLevelName, setCompletedLevelName}}>
             {children}
