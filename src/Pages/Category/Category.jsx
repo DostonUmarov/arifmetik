@@ -5,7 +5,7 @@ import { useAuth } from "../../Components/context"
 function Category() {
     const levels = [
         {name: "addition", display: "2+2", color:"red"},
-         {name: "subtraction", display: "2-2", color:"blue"},
+         {name: "subtraction", display: "4-1", color:"blue"},
           {name: "division", display: "10/5", color:"green"},
            {name: "multiplication", display: "2X2", color:"purple"}
         ]

@@ -81,7 +81,7 @@ function Subtraction() {
         setActiveButton(null)
         setCurrentQuestion((prev)=> prev + 1)    
         setRandomIndex(Math.floor(Math.random() * 4)) 
-  }
+  } 
   function handleButtonClick(){
     if (currentQuestion == 5) {
       if (activeButton == correctAnswer){
