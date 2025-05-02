@@ -26,7 +26,7 @@ function Level({levelName, levelDisplay}) {
         className={`${levelName}-circle`}>
             <p>{levelDisplay}</p>
             </div>
-                <p>{levelName}</p>
+                <p>{uzb}</p>
             </div>
   )
 }
