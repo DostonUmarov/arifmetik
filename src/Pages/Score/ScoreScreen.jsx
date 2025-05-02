@@ -32,7 +32,7 @@ function ScoreScreen() {
     <main className="score-main">
         <p className="congrats">Congratulations</p>
 
-        <p className="done">Weldone {name}, you just finished the {completedLevelName} category!🚀</p>
+        <p className="done">Barakalla {name}, Siz {completedLevelName} arifmetik amali bo'yicha sinovlarni yakunladingiz!🚀</p>
 
         <div className="scores">
             <div className="current-score">
