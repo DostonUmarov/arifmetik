@@ -57,9 +57,9 @@ function Home() {
 
      <p 
      ref={validatorRef}
-     className="validator hidden">Please enter your name to proceed 😁</p>
+     className="validator hidden">Ism Familyangizni kiriting</p>
 
-     <button type="submit">Start Playing</button>
+     <button type="submit">Sinovni boshlash</button>
     </form>
     
      </div>
