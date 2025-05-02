@@ -25,8 +25,8 @@ function Category() {
   return (
     <main className='categories-main'>
         <div className="top">
-            <p>Hello {name} 👋<br />
-             Please select a category you would like to play</p>
+            <p>Salom {name} 👋<br />
+             O'yinni davom ettirish uchun arifmetik amalni tanlang</p>
         </div>
         
 
