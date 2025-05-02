@@ -16,7 +16,7 @@ function Category() {
         levelDisplay={level.display}
         color={level.color}
         key={level.name}
-        uzb={level.uzbname}
+        uzbname={level.uzbname}
         />
     })
 
