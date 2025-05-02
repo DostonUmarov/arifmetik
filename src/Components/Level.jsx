@@ -2,7 +2,7 @@ import React from 'react'
 import { useRef, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 
-function Level({levelName, levelDisplay}) {
+function Level({levelName, levelDisplay, uzb}) {
     const navigate = useNavigate()
     const btnRef = useRef()
 
