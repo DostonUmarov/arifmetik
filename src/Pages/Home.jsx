@@ -53,7 +53,7 @@ function Home() {
       setInputValue(e.target.value)
     }}
      type="text" 
-     placeholder="Type your name here"/>
+     placeholder="Ismingizni kiriting"/>
 
      <p 
      ref={validatorRef}
