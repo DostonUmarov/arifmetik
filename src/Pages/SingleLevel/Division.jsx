@@ -39,7 +39,7 @@ function Division() {
           return newArr
   }
   function leaveGameConfirmation(){
-      const leaveGame = confirm("Are you sure you want to leave the game?")
+      const leaveGame = confirm("O'yinni tark etmoqchimisiz?")
       leaveGame ? navigate ("/category") : ""
   }
   function makeRandomNumberEven(number){
@@ -147,7 +147,7 @@ function Division() {
       </div>        
 
         <p className="progress">
-          Question {currentQuestion} of 5
+          Savollar {currentQuestion} / 5
         </p>
 
         <p className="question">
@@ -161,21 +161,21 @@ function Division() {
         <button 
         onClick={()=>{handleButtonClick() }}
         className={activeButton != null | activeButton != undefined? "" : "disabled"}
-        >Next Question</button>
+        >Keyingi savol</button>
 
       <div 
         ref={floatingScoreRef}        
         className="overlay">
           <div
         className="score-showcase">
-          <p>Oops, that's not the right answer, {`${randomNumber} ${sign} ${randomNumber2}`} is actually<span> {correctAnswer}</span></p>
+          <p>Afsus, Siz xato javob tanladingiz, {`${randomNumber} ${sign} ${randomNumber2}`} javobi<span> {correctAnswer}</span> bo'ladi</p>
 
           <button
           onClick={()=>{
             floatingScoreRef.current.classList.remove("visible")
             nextGame()
           }}
-          >Continue</button>
+          >Davom etish</button>
         </div>
           </div>
     </main>
