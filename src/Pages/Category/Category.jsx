@@ -4,15 +4,15 @@ import { useAuth } from "../../Components/context"
 
 function Category() {
     const levels = [
-        {name: "addition", display: "2+2", color:"red"},
-         {name: "subtraction", display: "4-1", color:"blue"},
-          {name: "division", display: "10/5", color:"green"},
-           {name: "multiplication", display: "2X2", color:"purple"}
+        {name: "addition", display: "2+2", color:"red", uzbname: "Qo'shish"},
+         {name: "subtraction", display: "4-1", color:"blue", uzbname: "Ayirish"},
+          {name: "division", display: "10/5", color:"green", uzbname: "Bo'lish"},
+           {name: "multiplication", display: "2X2", color:"purple", uzbname: "Ko'paytirish"}
         ]
     
     const levelCircles = levels.map((level)=>{
         return <Level 
-        levelName={level.name} 
+        levelName={level.uzbname} 
         levelDisplay={level.display}
         color={level.color}
         key={level.name}
@@ -31,7 +31,7 @@ function Category() {
         
 
         <div className="categories-body">
-            <h1>Categories</h1>
+            <h1>Amallar turkumi</h1>
 
         <div className="categories-container">
             {levelCircles}
