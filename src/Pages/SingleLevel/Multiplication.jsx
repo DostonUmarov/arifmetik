@@ -78,7 +78,7 @@ function Multiplication() {
     
   }
  function leaveGameConfirmation(){
-    const leaveGame = confirm("Are you sure you want to leave the game?")
+    const leaveGame = confirm("O'yinni tark etmoqchimisiz?")
     leaveGame ? navigate ("/category") : ""
   }
   function handleButtonClick(){
@@ -170,14 +170,14 @@ function Multiplication() {
         className="overlay">
           <div
         className="score-showcase">
-          <p>Oops, that's not the right answer, {`${randomNumber} ${sign} ${randomNumber2}`} is actually<span> {correctAnswer}</span></p>
+          <p>Afsus, bu xato javob, {`${randomNumber} ${sign} ${randomNumber2}`} to'g'ri javobi<span> {correctAnswer}</span> bo'ladi</p>
 
           <button
           onClick={()=>{
             floatingScoreRef.current.classList.remove("visible")
             nextGame()
           }}
-          >Continue</button>
+          >Davom etish</button>
         </div>
           </div>
     </main>
