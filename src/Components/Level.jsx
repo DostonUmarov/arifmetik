@@ -2,7 +2,7 @@ import React from 'react'
 import { useRef, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 
-function Level({levelName, levelDisplay, uzb}) {
+function Level({levelName, levelDisplay}) {
     const navigate = useNavigate()
     const btnRef = useRef()
 
@@ -26,7 +26,7 @@ function Level({levelName, levelDisplay, uzb}) {
         className={`${levelName}-circle`}>
             <p>{levelDisplay}</p>
             </div>
-                <p>{uzb}</p>
+                <p>{key}</p>
             </div>
   )
 }
