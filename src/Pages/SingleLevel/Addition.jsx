@@ -55,7 +55,7 @@ function Addition() {
     
   }
   function leaveGameConfirmation(){
-      const leaveGame = confirm("Are you sure you want to leave the game?")
+      const leaveGame = confirm("O'yindan chiqmoqchimsiz?")
       leaveGame ? navigate ("/category") : ""
   } 
   function handleButtonClick(){
@@ -145,7 +145,7 @@ function Addition() {
         
 
         <p className="progress">
-          Question {currentQuestion} of 5
+          Savollar {currentQuestion} / 5 
         </p>
 
         <p className="question">
