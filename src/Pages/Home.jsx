@@ -43,7 +43,7 @@ function Home() {
       handleSubmit(e)
     }}
     >
-     <h2>Please enter your name</h2>
+     <h2>Marhamat qilib, ismingizni kiriting:</h2>
 
      <input 
      ref={inputRef}
