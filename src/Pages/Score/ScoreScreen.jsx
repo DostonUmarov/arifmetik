@@ -30,18 +30,18 @@ function ScoreScreen() {
 
   return (
     <main className="score-main">
-        <p className="congrats">Congratulations</p>
+        <p className="congrats">Tabriklaymiz</p>
 
         <p className="done">Barakalla {name}, Siz {completedLevelName} arifmetik amali bo'yicha sinovlarni yakunladingiz!🚀</p>
 
         <div className="scores">
             <div className="current-score">
-                <p>Score</p>
+                <p>Ballingiz</p>
                 <p>{globalScore}</p>
             </div>
 
             <div className="high-score">
-                <p>Highscore</p>
+                <p>Maksimal ball</p>
                 <p>{globalHighScore}</p>
             </div>
         </div>
@@ -49,11 +49,11 @@ function ScoreScreen() {
         <div className="buttons">
             <button
             onClick={()=> playAgain()}
-            >Play Again</button>
+            >Yan boshlash</button>
 
             <button
             onClick={()=> backToCategoriesPage()}
-            >Main Menu</button>
+            >Asosiy menyu</button>
         </div>
     </main>
   )
