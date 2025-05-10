@@ -1,8 +1,12 @@
-main.gameplay-main{
-    background-image: linear-gradient(var(--gameplay-bg));
-    min-height:100vh;
+main.gameplay-main {
+    background-image: url("/assets/bl1.jpg");
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    min-height: 100vh;
     padding: 3rem 0 4rem;
 }
+
 
 .gameplay-main .cancel{
     background-color: var(--x-fill);
@@ -12,7 +16,7 @@ main.gameplay-main{
     border-radius: 50%;
     -webkit-border-radius: 50%;
     -moz-border-radius: 50%;
-    -ms-border-radius: 50%;
+    -ms-border-radius: 50%;    
     -o-border-radius: 50%;
 }
 
