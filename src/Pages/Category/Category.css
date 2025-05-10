@@ -1,12 +1,12 @@
 /* styling for the categories page  */
 
-main.categories-main{
-    background-color: var(--bg-main);
-    height: 100vh;
-    padding-block-start: 3rem;
-    display:grid;
-    grid-template-rows: auto 1fr;
-    overflow-x: hidden;
+main.categories-main {
+  background-image: url('../../assets/bg.png');
+  background-size: cover;
+  background-position: center;
+  min-height: 100vh;
+  padding: 20px;
+/*   color: #fff; /* Agar fon qorong‘i bo‘lsa, matn oq ko‘rinadi */
 }
 
 .top > p{
