@@ -21,7 +21,7 @@ main.gameplay-main {
 }
 
 .gameplay-main .progress{
-    color:white;
+    color:black;
     font-size: 1.4rem;
     text-align: center;
     margin:2rem 0 0;
@@ -30,7 +30,7 @@ main.gameplay-main {
 .gameplay-main .question{
     font-size: 6rem;
     font-family: poppins-semiBold;
-    color:white;
+    color:black;
     max-width: fit-content;
     margin:0 auto 2rem;
 }
